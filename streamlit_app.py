@@ -4,10 +4,10 @@ import importlib.util
 
 st.set_page_config(page_title="WCAG 디자이너 도구", layout="wide")
 
-# 스타일 (동일, 생략 가능)
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Pretendard&display=swap');
+
 html, body, [class*="css"] {
     font-family: 'Pretendard', 'Montserrat', sans-serif;
     font-size: 17px;
@@ -36,7 +36,6 @@ header, footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# 메뉴 설정
 st.sidebar.title("🧭 WCAG 검사 메뉴")
 menu = st.sidebar.radio("페이지 선택", [
     "🏠 홈 안내",
@@ -45,7 +44,7 @@ menu = st.sidebar.radio("페이지 선택", [
     "🎨 색상 & 폰트 분석"
 ])
 
-# 페이지 매핑
+page_dir = Path(__file__).parent / "pages"
 page_map = {
     "📁 HTML 업로드": "page1",
     "🧱 시맨틱 구조 분석": "page2",
@@ -60,11 +59,10 @@ WCAG 2.1 가이드라인에 따라 분석할 수 있도록 설계되었습니다
 """)
 else:
     module_name = page_map[menu]
-    file_path = Path(__file__).parent / "pages" / f"{module_name}.py"
-
+    file_path = page_dir / f"{module_name}.py"
     if file_path.exists():
         spec = importlib.util.spec_from_file_location(module_name, file_path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
     else:
-        st.error(f"❌ 페이지 파일이 존재하지 않습니다: {file_path}")
+        st.error(f"❌ 파일을 찾을 수 없습니다: {file_path}")
