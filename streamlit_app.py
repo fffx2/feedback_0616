@@ -4,10 +4,10 @@ import importlib.util
 
 st.set_page_config(page_title="WCAG 디자이너 도구", layout="wide")
 
+# Pretendard + Montserrat + 내비 디자인
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Pretendard&display=swap');
-
 html, body, [class*="css"] {
     font-family: 'Pretendard', 'Montserrat', sans-serif;
     font-size: 17px;
@@ -36,6 +36,7 @@ header, footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
+# 좌측 내비게이션
 st.sidebar.title("🧭 WCAG 검사 메뉴")
 menu = st.sidebar.radio("페이지 선택", [
     "🏠 홈 안내",
@@ -44,6 +45,7 @@ menu = st.sidebar.radio("페이지 선택", [
     "🎨 색상 & 폰트 분석"
 ])
 
+# 페이지 매핑
 page_dir = Path(__file__).parent / "pages"
 page_map = {
     "📁 HTML 업로드": "page1",
